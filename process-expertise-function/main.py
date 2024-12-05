@@ -37,11 +37,20 @@ def transcribe_youtube_videos(video_urls: List[str], bucket_name: str) -> None:
 
 def extract_video_id(url: str) -> str:
   """Extracts the video ID from a YouTube URL."""
-  # ... (same as original code)
+  if "v=" in url:
+      return url.split("v=")[1].split("&")[0] #handles most common cases
+  elif "youtu.be/" in url:
+      return url.split("youtu.be/")[1].split("?")[0] #handles short URLs
+  else:
+        raise ValueError(f"Invalid YouTube URL: {url}")
 
 def get_text_from_transcript(transcript: List[Dict[str, Any]]) -> str:
     """Extracts only the text content from a transcript."""
-    # ... (same as original code)
+    text = ""
+    for phrase in transcript:
+      text += f"{phrase['text']} " #concatenate each phrase to a new text string with a space at the end
+    return text.strip()
+
 
 def save_text_to_file(text: str, filename: str, bucket_name: str) -> None:
     """Saves text content to a file in Cloud Storage."""
@@ -68,7 +77,6 @@ def load_video_urls_from_gcs(bucket_name: str, filename: str) -> List[str]:
         return []
 
 
-#def process_video_urls(data, context):
 def process_video_urls(cloud_event):
     """Cloud Function triggered by finalize event in Cloud Storage."""
     data = cloud_event.data
