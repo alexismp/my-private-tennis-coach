@@ -4,16 +4,16 @@ import json
 import functions_framework
 from google.cloud import storage
 
-def save_transcript_to_file(transcript: List[Dict[str, Any]], filename: str, bucket_name: str) -> None:
-    """Saves a transcript to a JSON file in Cloud Storage."""
-    try:
-        storage_client = storage.Client()
-        bucket = storage_client.bucket(bucket_name)
-        blob = bucket.blob(filename)
-        blob.upload_from_string(json.dumps(transcript, indent=4, ensure_ascii=False), content_type='application/json')
-        print(f"Transcript saved to: gs://{bucket_name}/{filename}")
-    except Exception as e:
-        print(f"Error saving transcript to gs://{bucket_name}/{filename}: {e}")
+# def save_transcript_to_file(transcript: List[Dict[str, Any]], filename: str, bucket_name: str) -> None:
+#     """Saves a transcript to a JSON file in Cloud Storage."""
+#     try:
+#         storage_client = storage.Client()
+#         bucket = storage_client.bucket(bucket_name)
+#         blob = bucket.blob(filename)
+#         blob.upload_from_string(json.dumps(transcript, indent=4, ensure_ascii=False), content_type='application/json')
+#         print(f"Transcript saved to: gs://{bucket_name}/{filename}")
+#     except Exception as e:
+#         print(f"Error saving transcript to gs://{bucket_name}/{filename}: {e}")
 
 def transcribe_youtube_videos(video_urls: List[str], bucket_name: str) -> None:
     """
@@ -24,7 +24,7 @@ def transcribe_youtube_videos(video_urls: List[str], bucket_name: str) -> None:
             video_id = extract_video_id(url)
             transcript = YouTubeTranscriptApi.get_transcript(video_id)
             transcript_filename = f"{video_id}_transcript.json"
-            save_transcript_to_file(transcript, transcript_filename, bucket_name)
+            # save_transcript_to_file(transcript, transcript_filename, bucket_name)
 
             text = get_text_from_transcript(transcript)
             text_filename = f"{video_id}_text.txt"
@@ -76,14 +76,28 @@ def load_video_urls_from_gcs(bucket_name: str, filename: str) -> List[str]:
         print(f"Error loading URLs from gs://{bucket_name}/{filename}: {e}")
         return []
 
-
+@functions_framework.cloud_event
 def process_video_urls(cloud_event):
     """Cloud Function triggered by finalize event in Cloud Storage."""
     data = cloud_event.data
 
+    event_id = cloud_event["id"]
+    event_type = cloud_event["type"]
+
     bucket_name = data['bucket']
     file_name = data['name']
 
+    metageneration = data["metageneration"]
+    timeCreated = data["timeCreated"]
+    updated = data["updated"]
+
+    print(f"Event ID: {event_id}")
+    print(f"Event type: {event_type}")
+    print(f"Bucket: {bucket_name}")
+    print(f"File: {file_name}")
+    print(f"Metageneration: {metageneration}")
+    print(f"Created: {timeCreated}")
+    print(f"Updated: {updated}")
 
     if file_name == 'coaching-urls.txt':  # Check if the uploaded file is the URL list
         video_urls = load_video_urls_from_gcs(bucket_name, 'coaching-urls.txt')
