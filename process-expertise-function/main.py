@@ -23,11 +23,11 @@ def transcribe_youtube_videos(video_urls: List[str], bucket_name: str) -> None:
         try:
             video_id = extract_video_id(url)
             transcript = YouTubeTranscriptApi.get_transcript(video_id)
-            transcript_filename = f"{video_id}_transcript.json"
+            # transcript_filename = f"{video_id}_transcript.json"
             # save_transcript_to_file(transcript, transcript_filename, bucket_name)
 
             text = get_text_from_transcript(transcript)
-            text_filename = f"{video_id}_text.txt"
+            text_filename = f"{video_id}_transcript.txt"
             save_text_to_file(text, text_filename, bucket_name)
 
             print(f"Successfully transcribed: {url}")
