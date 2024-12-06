@@ -33,10 +33,7 @@ def gather_all_transcripts(bucket_name):
 
 
 def getSecretKey():
-#     Secrets
-# Mounted as a volume
-# /key/gemini-key
-# gemini-key:latest
+    # Secret mounted as a volume: /key/gemini-key
     try:
         with open('/key/gemini-key', 'r') as f:
             key = f.read().strip()  # Read and remove leading/trailing whitespace
@@ -86,22 +83,34 @@ def get_principles_from_llm(full_transcripts):
         "response_mime_type": "application/json",
     }
 
+    instructions = (
+        "You are a tennis coach with extensive experience and are able to turn "
+        "transcripts from coaching sessions into a list of 5 top principles that "
+        "tennis players should follow to improve their game and get better results. "
+        "These principles should be stats-related, not about how to play a "
+        "specific point or how to hit the ball or anything technique-related."
+        "Make sure to avoid duplicate principles such two focusing on first serves."
+        "Do not suggest principles that are related to placement on the court."
+        "Give each principle a really catchy name."
+    )
+
+
     exp = genai.GenerativeModel(
         model_name="gemini-exp-1121",
         generation_config=generation_config,
-        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+        system_instruction=instructions,
     )
 
     pro = genai.GenerativeModel(
         model_name="gemini-1.5-pro",
         generation_config=generation_config,
-        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+        system_instruction=instructions,
     )
 
     flash = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
-        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+        system_instruction=instructions,
     )
 
     chat_session = exp.start_chat(
