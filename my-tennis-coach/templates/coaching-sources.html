@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coaching URLs</title>
+</head>
+<body>
+    <h1>Coaching URLs</h1>
+    <ul id="url-list"></ul>
+
+    <script>
+        fetch('{{ url_for("get_coaching_sources")}}', {
+            mode: 'no-cors',
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("url-list").innerText = data.result;
+        })
+        .catch(error => console.error('Error:', error));
+
+        // const cloudFunctionUrl = "https://list-coaching-sources-681370065371.europe-west1.run.app";
+
+        // fetch(cloudFunctionUrl)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         print(response)
+        //         print(data)
+        //         const urlList = document.getElementById("url-list");
+        //         if (data.urls) {
+        //             data.urls.forEach(url => {
+        //                 const listItem = document.createElement("li");
+        //                 const link = document.createElement("a");
+        //                 link.href = url;
+        //                 link.textContent = url;
+        //                 listItem.appendChild(link);
+        //                 urlList.appendChild(listItem);
+        //             });
+        //         } else if (data.error) { // Display error from the Cloud Function if any
+        //           urlList.textContent = "Error: " + data.error;
+        //         }
+        //     })
+        //     .catch(error => {
+        //         print(error)
+        //         console.error("Error fetching URLs:", error);
+        //         document.getElementById("url-list").textContent = "Error fetching URLs.";
+        //     });
+    </script>
+</body>
+</html>
