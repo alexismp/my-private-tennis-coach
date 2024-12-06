@@ -65,8 +65,8 @@ def getSecretKey():
 
 def get_principles_from_llm(full_transcripts):
     key = getSecretKey()
-
     genai.configure(api_key=key)
+
     generation_config = {
         "temperature": 1,
         "top_p": 0.95,

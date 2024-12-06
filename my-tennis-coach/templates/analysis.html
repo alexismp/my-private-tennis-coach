@@ -1,13 +1,101 @@
-<!-- templates/personal_analysis.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
    <title>Personal Analysis</title>
+   <style>
+    body {
+        font-family: sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+    }
+
+    h1 {
+        text-align: left;
+        color: #333; /* Dark gray */
+    }
+
+    form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column; /* Align form elements vertically */
+        align-items: left;
+        width: 300px; /* Adjust as needed */
+        margin-left: auto;
+        margin-right: auto;
+     }
+    form label {
+         margin-bottom: 5px; /* Add some space between label and input */
+
+    }
+
+    form input[type="file"] {
+        padding: 5px;
+        border: 1px solid #ccc;
+    }
+
+    form input[type="submit"] {
+        background-color: #007bff; /* Blue submit button */
+        color: white;
+        padding: 8px 15px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+     .img-container { /* Container for image and link */
+         display: inline-block;
+         margin: 10px; /* Space between the image links */
+         text-align: left;
+     }
+
+     img {
+         max-width: 200px; /* Adjust image size as needed */
+         height: auto;
+         display: block; /* Prevents small space below image */
+         margin: 0 auto; /* Center the images horizontally */
+         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+     }
+
+     a {
+         text-decoration: none; /* Remove underlines from links */
+         color: #007bff; /* Blue link color */
+     }
+ </style>
 </head>
 <body>
 
     <h1>Personal Analysis</h1>
-        <p>Content for the personal analysis page goes here.</p>
-         <!-- Add your form or interactive elements as required.  -->
+
+    Provide your own stats. Valid examples provided below.
+    <br/>
+    <form method="POST" enctype="multipart/form-data" action="/upload">  <!-- Update action if needed -->
+        <label for="pdf-file">Upload PDF:</label>
+        <input type="file" name="pdf-file" id="pdf-file" required>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <br/>
+    <form method="POST" enctype="multipart/form-data" action="/upload_vertex">  <!-- Update action if needed -->
+        <label for="pdf-file">Upload PDF (vertex):</label>
+        <input type="file" name="pdf-file" id="pdf-file" required>
+        <br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <div class="img-container">
+        <a href="{{ url_for('static', filename='stats/set1-sinner-fritz.pdf') }}">
+            <img src="{{ url_for('static', filename='img/pro.png') }}" alt="Pro Stats Example">
+            <p>Pro Stats Example</p>  <!-- Text under the image -->
+        </a>
+    </div>
+
+    <div class="img-container">
+        <a href="{{ url_for('static', filename='stats/amateur-stats.pdf') }}">
+            <img src="{{ url_for('static', filename='img/amateur.png') }}" alt="Amateur Stats Example">
+            <p>Amateur Stats Example</p>  <!-- Text under the image -->
+        </a>
+    </div>
+
 </body>
 </html>

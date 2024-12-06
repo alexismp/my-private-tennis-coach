@@ -1,4 +1,8 @@
 from google.cloud import storage
+from typing import List, Dict, Any
+import os
+import google.generativeai as genai
+from google.ai.generativelanguage_v1beta.types import content
 
 def get_coaching_urls():
     """Reading URLs from a GCS file."""
@@ -18,3 +22,17 @@ def get_coaching_urls():
     except Exception as e:
         print(f"Error: {e}")  # Log the error for debugging
         return {"error": str(e)}, 500, {'Content-Type': 'application/json'}
+
+def getSecretKey():
+    # Secret mounted as a volume: /key/gemini-key
+    try:
+        with open('/key/gemini-key', 'r') as f:
+            key = f.read().strip()  # Read and remove leading/trailing whitespace
+            return key
+    except FileNotFoundError:
+        key = None  # Handle the case where the file isn't found
+        print("Error: /key file not found.")
+    except Exception as e:
+        key = None
+        print(f"An error occurred while reading /key: {e}")
+        
