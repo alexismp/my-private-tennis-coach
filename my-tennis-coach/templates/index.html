@@ -9,7 +9,7 @@
         nav {
             background-color: #f0f0f0; /* Light gray background */
             padding: 10px;
-            text-align: center;
+            text-align: left;
         }
         nav a {
             margin: 0 15px;
@@ -18,7 +18,7 @@
         }
 
         #logo {
-          width: 100px; /* Example width, adjust as needed */
+          width: 80px; /* Example width, adjust as needed */
           height: auto; /* Maintain aspect ratio */
        }
 
@@ -27,12 +27,11 @@
 
 </head>
 <body>
-
-   <img id="logo" src="img/logo.png" alt="Logo"> <!-- Replace logo.png with actual image file -->
-
+   <a href="/"><img id="logo" src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo"></a>
     <nav>
 
-        <a href="https://europe-west1-l200-one.cloudfunctions.net/extract-top-tennis-principles">Top 5 Principles</a>
+        <a href="https://extract-top-tennis-principles-681370065371.europe-west1.run.app/">Top 5 Principles</a>
+        <a href="https://list-coaching-sources-681370065371.europe-west1.run.app/">Coaching Sources</a>
         <a href="/personal_analysis">Personal Analysis</a>
 
     </nav>
