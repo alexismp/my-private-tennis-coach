@@ -1,0 +1,24 @@
+{
+    "top_5_tennis_principles": [
+        {
+            "description": "Maximize first serve percentage over number of aces. Focus on getting a high percentage of first serves in play to set up more advantageous points, rather than prioritizing ace numbers which may lead to a lower first serve percentage and ultimately, more lost points.",
+            "principle": "Serve to Win, Not Just Ace"
+        },
+        {
+            "description": "Prioritize placement over speed on your first serve. Aim for precise placement within the service box to test your opponent's return capabilities, instead of solely focusing on maximizing serve speed which could compromise accuracy and effectiveness.",
+            "principle": "Strategic Placement, Not Just Power"
+        },
+        {
+            "description": "Improve your winner-to-unforced error ratio by focusing on consistent, controlled shots that force errors rather than aiming for outright winners. This approach is more sustainable for winning matches, as it increases the chances of your opponent making mistakes while minimizing yours.",
+            "principle": "Consistency Creates Winners"
+        },
+        {
+            "description": "Track your forced errors to improve aggression and risk management. Keep track of how many aggressive shots you hit that made your opponent miss, without necessarily resulting in outright winners. This data highlights effective strategies to maintain aggressive play while mitigating unnecessary risks.",
+            "principle": "Calculated Aggression: Master the Forced Error"
+        },
+        {
+            "description": "Analyze your win probabilities for different shot selections, considering confounding factors like shot depth, direction and speed. By doing so, you can avoid drawing the wrong conclusions from raw statistics and understand when certain tactics are deceptively more or less effective than they seem.",
+            "principle": "Causal Inference: See Beyond the Numbers"
+        }
+    ]
+}

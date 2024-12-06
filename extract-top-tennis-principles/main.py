@@ -51,7 +51,6 @@ def getSecretKey():
 
 def get_principles_from_llm(full_transcripts):
     key = getSecretKey()
-    print(key)
 
     genai.configure(api_key=key)
     generation_config = {
@@ -87,4 +86,32 @@ def get_principles_from_llm(full_transcripts):
         "response_mime_type": "application/json",
     }
 
-    return '{"top_5_tennis_principles": [{"description": "Focus on hitting a high percentage of first serves in the box rather than going for aces to maintain a consistent serve and improve your chances of holding serve.", "principle": "Prioritize First Serve Percentage over Aces"}, {"description": "When returning serve, pre-plan your returns and aim them down the center of the court to increase consistency and reduce the angles available to your opponent, especially against serve-and-volley players.", "principle": "Target Center of the Court on Returns"}, {"description": "Maintain a higher net clearance on groundstrokes to reduce errors, hit deeper shots, and control rallies more effectively.  Avoid hitting too low over the net, which often results in short balls that your opponent can attack.", "principle": "Maintain a High Net Clearance on Groundstrokes"}, {"description": "When approaching the net, hit your volleys short and angled to make it difficult for your opponent to reach the ball, increasing your chances of winning the point. Avoid hitting volleys deep, which gives your opponent more time to react.", "principle": "Hit Short, Angled Volleys at the Net"}, {"description": "When your opponent approaches the net, use a two-shot passing shot strategy by first hitting a low ball down the middle to force a weak volley, and then following up with a more comfortable passing shot on the second ball.", "principle": "Utilize the Two-Shot Passing Shot Strategy"}]}'
+    exp = genai.GenerativeModel(
+        model_name="gemini-exp-1121",
+        generation_config=generation_config,
+        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+    )
+
+    pro = genai.GenerativeModel(
+        model_name="gemini-1.5-pro",
+        generation_config=generation_config,
+        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+    )
+
+    flash = genai.GenerativeModel(
+        model_name="gemini-1.5-flash",
+        generation_config=generation_config,
+        system_instruction="You are a tennis coach with extensive experience and are able to turn transcripts from coaching sessions into a list of 5 top principles that tennis players should follow to improve their game and get better results. These principles should be stats-related, not about how to play a specific point or how to hit the ball or anything technique-related. Give each principle a really catchy name.",
+    )
+
+    chat_session = exp.start_chat(
+        history=[
+        ]
+    )
+
+    response = chat_session.send_message(full_transcripts)
+
+    print(response)
+
+    return response.text
+    # return '{"top_5_tennis_principles": [{"description": "Focus on hitting a high percentage of first serves in the box rather than going for aces to maintain a consistent serve and improve your chances of holding serve.", "principle": "Prioritize First Serve Percentage over Aces"}, {"description": "When returning serve, pre-plan your returns and aim them down the center of the court to increase consistency and reduce the angles available to your opponent, especially against serve-and-volley players.", "principle": "Target Center of the Court on Returns"}, {"description": "Maintain a higher net clearance on groundstrokes to reduce errors, hit deeper shots, and control rallies more effectively.  Avoid hitting too low over the net, which often results in short balls that your opponent can attack.", "principle": "Maintain a High Net Clearance on Groundstrokes"}, {"description": "When approaching the net, hit your volleys short and angled to make it difficult for your opponent to reach the ball, increasing your chances of winning the point. Avoid hitting volleys deep, which gives your opponent more time to react.", "principle": "Hit Short, Angled Volleys at the Net"}, {"description": "When your opponent approaches the net, use a two-shot passing shot strategy by first hitting a low ball down the middle to force a weak volley, and then following up with a more comfortable passing shot on the second ball.", "principle": "Utilize the Two-Shot Passing Shot Strategy"}]}'

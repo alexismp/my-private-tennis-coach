@@ -1,0 +1,24 @@
+{
+    "top_5_tennis_principles": [
+    {
+        "description": "Prioritize consistency over going for outright winners. Focus on a balanced winner-to-unforced error ratio to improve your chances of winning points.",
+        "principle": "Consistency is King"
+    },
+    {
+        "description": "Focus on a high first-serve percentage rather than just hitting aces. A consistent serve sets you up for success in the long run.",
+        "principle": "Serve Smart, Not Hard"
+    },
+    {
+        "description": "Prioritize accuracy over speed when hitting serves. Effective placement is a key factor in winning points.",
+        "principle": "Placement Over Pace"
+    },
+    {
+        "description": "Recognize the importance of forced errors and use aggressive shots with margin to make your opponent miss.",
+        "principle": "Force the Error"
+    },
+    {
+        "description": "Consistently hit cross-court unless you have a tactical advantage to go down the line. Minimize running and maximize court coverage.",
+        "principle": "Cross-Court Domination"
+    }
+    ]    
+}
